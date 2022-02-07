@@ -1,12 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { CartContext } from "./CartContext";
 import CartItem from "./CartItem";
+import CartWidget from "./CartWidget";
 
 
 export default function Cart() {
 
-  const { cart, clearCart } = useContext(CartContext);
+  const { cart, clearCart, sumarTotales, sumarCantidades } = useContext(CartContext);
+
+  const [total, setTotal] = useState(0);
+  const [cantidad, setCantidad] = useState(0);
+
+  useEffect(() => {
+
+    setTotal(sumarTotales());
+    setCantidad(sumarCantidades());
+    
+  },[])
     
   return (
     <>
@@ -18,6 +29,8 @@ export default function Cart() {
         :
         <div>
           {cart.map(element => <CartItem key={element.item.id} prod={element} />)}
+          <p>Cantidad: { cantidad}</p>
+          <p>Total: ${ total}</p>
           <button onClick={() => clearCart()}>Clear Cart</button>
         </div>
       }

@@ -4,10 +4,13 @@ import CartIcon from '../img/CartIcon.png'
 
 
 
-export default function CartWidget() {
+export default function CartWidget({cant}) {
     return (
         <>
-           <li><Link to={"/cart"}><img className="cart-widget" src={CartIcon} />0</Link></li>
+            <li><Link to={"/cart"}><img className="cart-widget" src={CartIcon} /></Link></li>
+            {cant > 0 ? <li>{cant}</li> :
+            <li></li>}
+           
         </>
     )
 }

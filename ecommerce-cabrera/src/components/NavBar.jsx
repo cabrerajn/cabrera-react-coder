@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { CartContext } from "./CartContext";
 import CartWidget from "./CartWidget";
 
 
 export default function NavBar() {
+
+    const { sumarCantidades, cart } = useContext(CartContext)
+    const [cantidad, setCantidad] = useState(0);
+
+    useEffect(() => {
+        setCantidad(sumarCantidades());
+    },[cart])
+
 
     return (
         <>
@@ -13,7 +22,7 @@ export default function NavBar() {
                     <li><button className="boton-menu"><Link to={"/category/LG"}>LG</Link></button></li>
                     <li><button className="boton-menu"><Link to={"/category/Motorola"}>Motorola</Link></button></li>
                     <li><button className="boton-menu"><Link to={"/category/Samsung"}>Samsung</Link></button></li>
-                    <CartWidget />
+                    <CartWidget cant={cantidad} />
                 </ul>
             </div>
         </>

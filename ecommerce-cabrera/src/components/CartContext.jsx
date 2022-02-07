@@ -33,9 +33,29 @@ export function CartProvider({ children }) {
     setCart([])
   }
 
+  const sumarTotales = () => {
+
+    if (cart.length > 0)
+    { return cart.map((item) => item.item.price * item.count).reduce((a, b) => a + b); }
+    else {
+      return 0
+    }
+  }
+
+  const sumarCantidades = () => {
+
+    if (cart.length > 0) {
+      return cart.map((item) =>item.count).reduce((a, b) => a + b);
+    }    
+    else {
+      return 0
+    }
+
+  }
+
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, deleteItem, clearCart }}>
+    <CartContext.Provider value={{ cart, addToCart, deleteItem, clearCart, sumarTotales, sumarCantidades }}>
       {children}
     </CartContext.Provider>
   )
