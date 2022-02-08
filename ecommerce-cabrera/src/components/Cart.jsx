@@ -17,7 +17,7 @@ export default function Cart() {
     setTotal(sumarTotales());
     setCantidad(sumarCantidades());
     
-  },[])
+  },[cart])
     
   return (
     <>
