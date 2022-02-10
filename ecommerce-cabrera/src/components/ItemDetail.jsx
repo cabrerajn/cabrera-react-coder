@@ -5,10 +5,11 @@ import MasMenos from "./MasMenos";
 
 export default function ItemDetail({ producto, onAdd, added }) {
 
+    
+
     return (
         <>
-            <div>
-                {(producto.id) ?
+            
                     <>
                         <div className="card">
                             <h2>{producto.title}</h2>
@@ -20,10 +21,8 @@ export default function ItemDetail({ producto, onAdd, added }) {
                             {added ? <Link to={"/cart"}>Ir al carrito</Link> : <MasMenos stock={producto.stock} initial={1} onAdd={onAdd} />}
                         </div>
                     </>
-                    :
-                    <>Loading...</>
-                }
-            </div>
+                
+           
         </>
     );
     

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import {useParams} from 'react-router-dom';
 import { CartContext } from "./CartContext";
 import ItemDetail from "./ItemDetail";
+import { getFirestore } from "../firebase/firebase";
+import "firebase/firestore";
 
 
 export default function ItemDetailContainer() {
@@ -10,29 +12,38 @@ export default function ItemDetailContainer() {
 
   const { itemId } = useParams();
 
-  const [producto, setProducto] = useState({});
-  const [added, setAdded]=useState(false)
+  const [producto, setProducto] = useState([]);
+  const [added, setAdded] = useState(false)
+  
 
-  useEffect(()=>{
-    setTimeout(()=>{
-      let listadoDeProductos = [
-        { id: 1, title: 'Samsung A12', category: 'Samsung', description: '64GB de Memoria', price: 33999, pictureUrl: 'https://tienda.movistar.com.ar/media/catalog/product/cache/1d01ed3f1ecf95fcf479279f9ae509ad/s/a/samsung_galaxy_a12_negro_frente_lifestyle_7_1_1.png', stock: 5 },
-        {id: 2, title: 'Motorola E40', category:'Motorola', description: '32GB de Memoria', price: 27499, pictureUrl:'https://tienda.movistar.com.ar/media/catalog/product/cache/1d01ed3f1ecf95fcf479279f9ae509ad/2/0/2021_cyprus464_basicpack_carbon_gray_frontside_4.png', stock: 6},
-        {id: 3, title: 'LG Q6', category:'LG', description: '32GB de Memoria', price: 8499, pictureUrl:'https://tienda.movistar.com.ar/media/catalog/product/cache/1d01ed3f1ecf95fcf479279f9ae509ad/l/g/lg_q6_negro_gtia_pantalla_1_1.png', stock: 7}  ];
+  useEffect(() => { 
+    const db = getFirestore();
 
-      listadoDeProductos = listadoDeProductos.filter(item => item.id == itemId);
+    const itemCollection = db.collection("productos")
 
-      let myProducto = listadoDeProductos[0];
+    const itemFilter = itemCollection.doc(itemId)
+    
+    itemFilter.get()
+      .then((doc) => {
+        if (!doc.exists) {
+          console.log('No hay documentos con esta query');
+          return
+        }
 
-      setProducto(myProducto);
-
-    }, 2000)
-  }, [itemId])
+        setProducto({ id: doc.id, ...doc.data() })
+      })
+  
+      .catch((err) => {
+        console.log(err)
+      });
+      
+    }, [itemId])
 
   const onAdd = (count) => {
     addToCart(producto, count)
     setAdded(true)
   }
+
 
   return (
     <>

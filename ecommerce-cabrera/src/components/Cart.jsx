@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { CartContext } from "./CartContext";
 import CartItem from "./CartItem";
-import CartWidget from "./CartWidget";
+
 
 
 export default function Cart() {
