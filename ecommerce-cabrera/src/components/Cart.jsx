@@ -5,6 +5,7 @@ import CartItem from "./CartItem";
 
 
 
+
 export default function Cart() {
 
   const { cart, clearCart, sumarTotales, sumarCantidades } = useContext(CartContext);
@@ -32,6 +33,7 @@ export default function Cart() {
           <p>Cantidad: { cantidad}</p>
           <p>Total: ${ total}</p>
           <button onClick={() => clearCart()}>Clear Cart</button>
+          <button><Link to="/checkout">Comprar</Link></button>
         </div>
       }
     </>

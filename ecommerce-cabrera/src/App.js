@@ -8,6 +8,7 @@ import CategoryContainer from './components/CategoryContainer';
 import Cart from './components/Cart';
 import { CartProvider } from './components/CartContext';
 import Footer from './components/Footer';
+import FormCheckout from './components/FormCheckout';
 
 
 export default function App() {
@@ -35,6 +36,10 @@ export default function App() {
 
             <Route exact path="/cart">
               <Cart />
+            </Route>
+
+            <Route exact path="/checkout">
+              <FormCheckout />
             </Route>
           </Switch>
           <div><Footer /></div>
