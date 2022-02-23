@@ -1,14 +1,12 @@
-import React, { useState,  useRef, useContext, useEffect } from "react";
+import React, { useState,  useRef, useContext } from "react";
 import firebase from "firebase";
 import { getFirestore } from '../firebase/firebase'
 import { CartContext } from "./CartContext";
 
 export default function FormCheckout() {
 
-    const { cart, sumarTotales } = useContext(CartContext);
-
+    const { cart, sumarTotales, clearCart } = useContext(CartContext);
     const [orderId, setOrderId] = useState('');
-    const [total, setTotal] = useState(0);
 
     const nameRef = useRef();
     const addressRef = useRef();
@@ -16,22 +14,16 @@ export default function FormCheckout() {
     const stateRef = useRef();
     const emailRef = useRef();
     const mobileRef = useRef();
-
-    useEffect(() => {
-
-        setTotal(sumarTotales());
-        console.log(total);
-        console.log(cart)
         
-        
-      },[])
-
     function handleClick() {
 
         const db = getFirestore();
         const orders = db.collection("ordenes");
-         
+        const total = (sumarTotales());
+        const productos = db.collection("productos")
+        
 
+    
         const miOrden = {
             buyer: {
                 name: nameRef.current.value,
@@ -54,9 +46,28 @@ export default function FormCheckout() {
             .catch((err) => {
                 console.log(err);
             });
-
+        
+        updateStock(productos);
+        
+        
+        
     }
 
+    function updateStock(productos) {
+        
+        let idProd;
+
+        for (let i = 0; i <= cart.length; i++) {
+            
+            idProd = cart[i].item.id
+            console.log('El id es: ' + idProd);
+            productos.doc(idProd).update({ stock: cart[i].item.stock - cart[i].count });
+        }
+
+        clearCart();
+        
+    }
+        
     return (
 
         <>
