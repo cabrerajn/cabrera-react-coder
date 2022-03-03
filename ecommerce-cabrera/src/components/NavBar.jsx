@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { CartContext } from "./CartContext";
 import CartWidget from "./CartWidget";
 
@@ -8,6 +8,8 @@ export default function NavBar() {
 
     const { sumarCantidades, cart } = useContext(CartContext)
     const [cantidad, setCantidad] = useState(0);
+   
+
 
     useEffect(() => {
         setCantidad(sumarCantidades());
@@ -16,15 +18,15 @@ export default function NavBar() {
 
     return (
         <>
-            <div id="navbar">
+            <nav className="menu">
+                <li className="logo"><Link to={"/"}><img src="https://tienda.movistar.com.ar/media/logo/stores/1/logo-movistar.png" /></Link></li>
                 <ul>
-                    <li><button className="boton-menu"><Link to={"/"}><img src="https://tienda.movistar.com.ar/media/logo/stores/1/logo-movistar.png" /></Link></button></li>
-                    <li><button className="boton-menu"><Link to={"/category/LG"}>LG</Link></button></li>
-                    <li><button className="boton-menu"><Link to={"/category/Motorola"}>Motorola</Link></button></li>
-                    <li><button className="boton-menu"><Link to={"/category/Samsung"}>Samsung</Link></button></li>
+                    <li><NavLink to={"/category/LG"}>LG</NavLink></li>
+                    <li><NavLink to={"/category/Motorola"}>Motorola</NavLink></li>
+                    <li><NavLink to={"/category/Samsung"}>Samsung</NavLink></li>
                     <CartWidget cant={cantidad} />
                 </ul>
-            </div>
+            </nav>
         </>
     )
     

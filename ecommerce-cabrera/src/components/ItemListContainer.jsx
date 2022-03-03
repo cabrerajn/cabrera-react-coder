@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import ItemList from "./ItemList";
 import { getFirestore } from "../firebase/firebase";
+import Loader from "./Loader";
 
 
 export default function ItemListContainer() {
   
   const [listadoDeProductos, setListadoDeProductos] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-
+    setLoading(true);
     const db = getFirestore();
 
     const itemCollection = db.collection("productos")
@@ -28,6 +30,7 @@ export default function ItemListContainer() {
       .catch((err) => {
         console.log(err)
       })
+      .finally (() => setLoading(false))
    
   }, [])
 
@@ -35,7 +38,7 @@ export default function ItemListContainer() {
   return (
     <>
       <div>
-      <ItemList products={listadoDeProductos} />
+        {loading ? <Loader /> : <ItemList products={listadoDeProductos} />}
       </div>
     </>
   );

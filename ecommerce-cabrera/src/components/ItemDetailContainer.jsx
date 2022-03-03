@@ -3,6 +3,7 @@ import {useParams} from 'react-router-dom';
 import { CartContext } from "./CartContext";
 import ItemDetail from "./ItemDetail";
 import { getFirestore } from "../firebase/firebase";
+import Loader from "./Loader";
 import "firebase/firestore";
 
 
@@ -14,9 +15,11 @@ export default function ItemDetailContainer() {
 
   const [producto, setProducto] = useState([]);
   const [added, setAdded] = useState(false)
+  const [loading, setLoading] = useState(false);
   
 
   useEffect(() => { 
+    setLoading(true);
     const db = getFirestore();
 
     const itemCollection = db.collection("productos")
@@ -33,9 +36,8 @@ export default function ItemDetailContainer() {
         setProducto({ id: doc.id, ...doc.data() })
       })
   
-      .catch((err) => {
-        console.log(err)
-      });
+      .catch((err) => console.log(err))
+      .finally (() => setLoading(false))
       
     }, [itemId])
 
@@ -47,9 +49,9 @@ export default function ItemDetailContainer() {
 
   return (
     <>
-      <div>
-        <ItemDetail onAdd={onAdd} producto={producto} added={added} />
-      </div>
+      
+      {loading ? <Loader /> : <ItemDetail onAdd={onAdd} producto={producto} added={added} />}
+      
     </>
   );
   

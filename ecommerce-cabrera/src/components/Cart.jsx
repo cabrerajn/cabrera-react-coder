@@ -23,17 +23,29 @@ export default function Cart() {
   return (
     <>
       {cart.length === 0 ?
-        <div>
-          <p>Empty Cart</p>
-          <Link to='/'>Go to shop!</Link>
+        <div className="carro-vacio">
+          <p className="empty">CARRITO VACÍO</p>
+          <button className='boton-card-detail'><Link to='/'>Ir a comprar!</Link></button>
         </div>
         :
         <div>
-          {cart.map(element => <CartItem key={element.item.id} prod={element} />)}
-          <p>Cantidad: { cantidad}</p>
-          <p>Total: ${ total}</p>
-          <button onClick={() => clearCart()}>Clear Cart</button>
-          <button><Link to="/checkout">Comprar</Link></button>
+          <table className="tabla-carrito">
+            <thead className="encabezado">
+              <tr>
+                <td>Producto</td>
+                <td>Cantidad</td>
+                <td>Precio</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+            <tr>{cart.map(element => <CartItem key={element.item.id} prod={element} />)}</tr>
+            </tbody>
+          </table>
+          <div className="total">Cantidad: { cantidad}</div>
+          <div className="total">Total: ${total}</div>
+          <div className='boton-carrito'><button className="boton-card-detail"><Link to="/checkout">Comprar</Link></button></div>
+          <div className='boton-carrito' ><button className="boton-card-detail" onClick={() => clearCart()}>Vaciar carrito</button></div>
         </div>
       }
     </>

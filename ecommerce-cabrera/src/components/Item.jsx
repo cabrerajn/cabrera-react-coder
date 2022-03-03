@@ -10,8 +10,9 @@ export default function Item({ product }) {
                 <h2>{product.title}</h2>
                 <img src={product.pictureUrl} className="imgProd" />
                 <p>${product.price}</p>
-                <button> <Link to={"/item/" + product.id}>Ver detalles de producto</Link></button>
+                <button> <Link to={"/item/" + product.id}>Ver</Link></button>
             </div> 
+            
         </>
     );
     

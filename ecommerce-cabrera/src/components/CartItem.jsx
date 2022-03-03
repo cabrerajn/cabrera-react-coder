@@ -8,12 +8,10 @@ export default function CartItem({ prod }) {
 
   return (
     <>
-      <div>
-        <h3>{prod.item.title}</h3>
-        <p>quantity: {prod.count}</p> 
-        <p>price: ${ prod.item.price}</p>
-        <button onClick={() => deleteItem(prod.item.id)}>Delete</button>
-      </div>
+          <td>{prod.item.title}<br /><img src={prod.item.pictureUrl} className="imgProd" /></td>
+          <td>{prod.count}</td> 
+          <td>${ prod.item.price}</td>
+          <td><button className='boton-card-detail' onClick={() => deleteItem(prod.item.id)}>Eliminar</button></td>
     </>
   )
   

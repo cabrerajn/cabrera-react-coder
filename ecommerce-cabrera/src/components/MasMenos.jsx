@@ -15,10 +15,10 @@ export default function MasMenos({stock, initial, onAdd}){
 
     return(
         <>
-            <button onClick={()=>restar()}>-</button>
+            <button className="boton-card-detail" onClick={()=>restar()}>-</button>
             {cantidad}
-            <button onClick={() => sumar()}>+</button>
-            <button onClick={()=>onAdd(cantidad)}>Agregar al carrito</button>
+            <button className="boton-card-detail" onClick={() => sumar()}>+</button>
+            <button className="boton-card-detail" onClick={()=>onAdd(cantidad)}>Agregar al carrito</button>
         </>
     )
 
